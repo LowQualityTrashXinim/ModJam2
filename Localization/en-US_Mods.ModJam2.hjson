@@ -1,2 +1,78 @@
-# This file will automatically update with entries for new content after a build and reload.
+Buffs: {
+	EvasionSpell: {
+		DisplayName: Evasion Spell
+		Description: Mods.ModJam2.Buffs.EvasionSpell.Description
+	}
 
+	InvincibilitySpell: {
+		DisplayName: Invincibility Spell
+		Description: Mods.ModJam2.Buffs.InvincibilitySpell.Description
+	}
+
+	MagicalSpell: {
+		DisplayName: Magical Spell
+		Description: Mods.ModJam2.Buffs.MagicalSpell.Description
+	}
+
+	MaterializeSpell: {
+		DisplayName: Materialize Spell
+		Description: Mods.ModJam2.Buffs.MaterializeSpell.Description
+	}
+
+	ProtectionSpell: {
+		DisplayName: Protection Spell
+		Description: Mods.ModJam2.Buffs.ProtectionSpell.Description
+	}
+
+	StrikeSpell: {
+		DisplayName: Strike Spell
+		Description: Mods.ModJam2.Buffs.StrikeSpell.Description
+	}
+}
+
+Items: {
+	MagicalScroll: {
+		DisplayName: Magical Scroll
+		Tooltip: ""
+	}
+
+	ScrollofEvasive: {
+		DisplayName: Scrollof Evasive
+		Tooltip: ""
+	}
+
+	ScrollOfFire: {
+		DisplayName: Scroll Of Fire
+		Tooltip: ""
+	}
+
+	ScrollOfInvincibility: {
+		DisplayName: Scroll Of Invincibility
+		Tooltip: ""
+	}
+
+	ScrollOfMaterialize: {
+		DisplayName: Scroll Of Materialize
+		Tooltip: ""
+	}
+
+	ScrollOfProtection: {
+		DisplayName: Scroll Of Protection
+		Tooltip: ""
+	}
+
+	ScrollofStrike: {
+		DisplayName: Scrollof Strike
+		Tooltip: ""
+	}
+
+	ScrollOfTeleportation: {
+		DisplayName: Scroll Of Teleportation
+		Tooltip: ""
+	}
+
+	ScrollOfWater: {
+		DisplayName: Scroll Of Water
+		Tooltip: ""
+	}
+}
