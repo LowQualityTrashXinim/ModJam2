@@ -76,3 +76,10 @@ Items: {
 		Tooltip: ""
 	}
 }
+
+NPCs.Knight.DisplayName: Knight
+
+Projectiles: {
+	NpcGrappleHook.DisplayName: Npc Grapple Hook
+	NpcSwordSwing.DisplayName: Npc Sword Swing
+}
