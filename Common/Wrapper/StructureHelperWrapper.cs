@@ -1,19 +1,24 @@
-﻿using StructureHelper.API;
+﻿using Microsoft.Xna.Framework;
+using StructureHelper.API;
 using StructureHelper.Models;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace ModJam2.Common.Wrapper
 {
-    public static class StructureHelperWrapper
+    public static partial class ModWrapper
     {
-        public static void Get_StructureData(string path, Mod mod)
+        public static StructureData Get_StructureData(string path, Mod mod)
         {
-            Generator.GetStructureData(path, mod);
+            return Generator.GetStructureData(path, mod);
         }
-        public static void Generate(StructureData data, Point16 pos)
+        public static void GenerateFromData(StructureData data, Point16 pos)
         {
             Generator.GenerateFromData(data, pos);
+        }
+        public static bool IsInBound(StructureData data, Point16 pos)
+        {
+            return Generator.IsInBounds(data, pos);
         }
     }
 }
