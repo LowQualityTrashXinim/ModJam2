@@ -2,7 +2,7 @@
 {
     public static class ModTexture
     {
-        public const string CommonTextureStringPattern = "Roguelike/Texture/";
+        public const string CommonTextureStringPattern = "ModJam2/Texture/";
         public const string MissingTexture_Folder = "MissingTexture/";
         public const string MISSINGTEXTUREPOTION = CommonTextureStringPattern + "MissingTexturePotion";
         public const string EMPTYBUFF = CommonTextureStringPattern + "EmptyBuff";
