@@ -1,41 +1,31 @@
 Buffs: {
 	EvasionSpell: {
 		DisplayName: Evasion Spell
-		Description: Mods.ModJam2.Buffs.EvasionSpell.Description
-	}
-
-	InvincibilitySpell: {
-		DisplayName: Invincibility Spell
-		Description: Mods.ModJam2.Buffs.InvincibilitySpell.Description
-	}
-
-	MagicalSpell: {
-		DisplayName: Magical Spell
-		Description: Mods.ModJam2.Buffs.MagicalSpell.Description
+		Description: You have 100% to dodge an attack, dodging will remove the spell
 	}
 
 	MaterializeSpell: {
 		DisplayName: Materialize Spell
-		Description: Mods.ModJam2.Buffs.MaterializeSpell.Description
+		Description: Hitting enemy have 1 in 15 chance to drop heart of mana
+	}
+
+	InvincibilitySpell: {
+		DisplayName: Invincibility Spell
+		Description: Grant complete invincibility
 	}
 
 	ProtectionSpell: {
 		DisplayName: Protection Spell
-		Description: Mods.ModJam2.Buffs.ProtectionSpell.Description
+		Description: Grant completely resistance to next hit you take
 	}
 
 	StrikeSpell: {
 		DisplayName: Strike Spell
-		Description: Mods.ModJam2.Buffs.StrikeSpell.Description
+		Description: Increases user damage by 10% and next hit will strke 5 times
 	}
 }
 
 Items: {
-	MagicalScroll: {
-		DisplayName: Magical Scroll
-		Tooltip: ""
-	}
-
 	ScrollofEvasive: {
 		DisplayName: Scrollof Evasive
 		Tooltip: ""
@@ -75,4 +65,24 @@ Items: {
 		DisplayName: Scroll Of Water
 		Tooltip: ""
 	}
+
+	CursedFlameThrowingKnife: {
+		DisplayName: Cursed Flame Throwing Knife
+		Tooltip: ""
+	}
+
+	IchorThrowingKnife: {
+		DisplayName: Ichor Throwing Knife
+		Tooltip: ""
+	}
+
+	TestEnterSubWorld: {
+		DisplayName: Test Enter Sub World
+		Tooltip: ""
+	}
+}
+
+Projectiles: {
+	CursedFlameThrowingKnife_Projectile.DisplayName: Cursed Flame Throwing Knife
+	IchorThrowingKnife_Projectile.DisplayName: Ichor Throwing Knife
 }

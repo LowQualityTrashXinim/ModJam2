@@ -28,6 +28,7 @@ public class ProtectionSpell_Player : ModPlayer
         if (Player.HasBuff<ProtectionSpell>())
         {
             modifiers.SetMaxDamage(1);
+            modifiers.Knockback *= 0;
             Player.DelBuff(Player.FindBuffIndex(ModContent.BuffType<ProtectionSpell>()));
         }
     }
@@ -36,6 +37,7 @@ public class ProtectionSpell_Player : ModPlayer
         if (Player.HasBuff<ProtectionSpell>())
         {
             modifiers.SetMaxDamage(1);
+            modifiers.Knockback *= 0;
             Player.DelBuff(Player.FindBuffIndex(ModContent.BuffType<ProtectionSpell>()));
         }
     }

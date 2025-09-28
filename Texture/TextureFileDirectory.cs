@@ -10,5 +10,15 @@
         public const string ACCESSORIESSLOT = "Terraria/Images/Inventory_Back7";
         public const string Wave = CommonTextureStringPattern + "Wave";
         public const string MissingTexture_Default = CommonTextureStringPattern + MissingTexture_Folder + "MissingTextureDefault";
+        public static string GetTheSameTextureAsEntity<T>() where T : class
+        {
+            var type = typeof(T);
+            string NameSpace = type.Namespace;
+            if (NameSpace == null)
+            {
+                return MissingTexture_Default;
+            }
+            return NameSpace.Replace(".", "/") + "/" + type.Name;
+        }
     }
 }
