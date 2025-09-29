@@ -10,14 +10,14 @@ using Terraria.ModLoader;
 
 namespace ModJam2.Content.NPCs
 {
-    public class Archer : ModNPC
+    public class Mage : ModNPC
     {
-         const int CopyNPC = NPCID.ArmoredViking;
+        const int CopyNPC = NPCID.Tim;
         int playerUnreachableDuration = 0;
         const int GRAPPLE_COOLDOWN = 120;
         NpcGrappleHook hook = null;
         NpcSwordSwing sword = null;
-        public override string Texture => "Terraria/Images/NPC_"+NPCID.ArmoredViking;
+        public override string Texture => "Terraria/Images/NPC_"+NPCID.Tim;
 
         public override void SetStaticDefaults()
         {
@@ -32,19 +32,19 @@ namespace ModJam2.Content.NPCs
         {
             NPC.CloneDefaults(CopyNPC);
             AnimationType = CopyNPC;
-            
+            NPC.aiStyle = -1;
         }
 
         public override void AI()
         {
-    
+            NPC.TargetClosest();
             if(NPC.targetRect.Center().Y < NPC.Center.Y - 64)
                 playerUnreachableDuration = (int)MathHelper.Clamp(playerUnreachableDuration + 1,0,GRAPPLE_COOLDOWN);
             else
                 playerUnreachableDuration = (int)MathHelper.Clamp(playerUnreachableDuration - 1,0,GRAPPLE_COOLDOWN);
-            if(playerUnreachableDuration >= GRAPPLE_COOLDOWN && !Collision.CanHitWithCheck(NPC.Center,16,16,NPC.targetRect.Center(),16,16,(x,y) => { return WorldGen.TileType(x,y) != TileID.Platforms; }))
+            if(playerUnreachableDuration >= GRAPPLE_COOLDOWN)
             {
-                hook = Projectile.NewProjectileDirect(null,NPC.Center,NPC.DirectionTo(NPC.targetRect.Center()) * 15,ModContent.ProjectileType<NpcGrappleHook>(),0,0,-1,NPC.whoAmI).ModProjectile as NpcGrappleHook;
+                NPC.Center = NPC.targetRect.Center() + Vector2.UnitX * 128 * NPC.direction;
                 playerUnreachableDuration = 0;
                 NPC.TargetClosest();
             }
@@ -52,12 +52,11 @@ namespace ModJam2.Content.NPCs
 
             if(NPC.localAI[2] == 0 && NPC.Distance(NPC.targetRect.Center()) <= 725)
             {
-                Projectile.NewProjectileDirect(null,NPC.Center,NPC.DirectionTo(NPC.targetRect.Center()) * 16,ModContent.ProjectileType<NpcBow>(),0,0,-1,NPC.whoAmI);
+                Projectile.NewProjectileDirect(null,NPC.Center,NPC.DirectionTo(NPC.targetRect.Center()) * 32,ModContent.ProjectileType<NpcStaff>(),0,0,-1,NPC.whoAmI);
                 NPC.localAI[2] = 120;
             }
 
         }
 
     }
-    
 }

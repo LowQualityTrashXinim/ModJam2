@@ -83,13 +83,16 @@ Items: {
 }
 
 Projectiles: {
-	CursedFlameThrowingKnife_Projectile.DisplayName: Cursed Flame Throwing Knife
-	IchorThrowingKnife_Projectile.DisplayName: Ichor Throwing Knife
-}
-
-NPCs.Knight.DisplayName: Knight
-
-Projectiles: {
 	NpcGrappleHook.DisplayName: Npc Grapple Hook
 	NpcSwordSwing.DisplayName: Npc Sword Swing
+	NpcBow.DisplayName: Npc Bow
+	CursedFlameThrowingKnife_Projectile.DisplayName: Cursed Flame Throwing Knife_ Projectile
+	IchorThrowingKnife_Projectile.DisplayName: Ichor Throwing Knife_ Projectile
+	NpcStaff.DisplayName: Npc Staff
+}
+
+NPCs: {
+	Knight.DisplayName: Knight
+	Archer.DisplayName: Archer
+	Mage.DisplayName: Mage
 }

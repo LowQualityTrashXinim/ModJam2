@@ -15,12 +15,12 @@ namespace ModJam2.Content.NPCs
     public class Knight : ModNPC
     {
         
-        const int CopyNPC = NPCID.BoneLee;
+        const int CopyNPC = NPCID.ArmoredSkeleton;
         int playerUnreachableDuration = 0;
         const int GRAPPLE_COOLDOWN = 120;
         NpcGrappleHook hook = null;
         NpcSwordSwing sword = null;
-        public override string Texture => "Terraria/Images/NPC_"+NPCID.BoneLee;
+        public override string Texture => "Terraria/Images/NPC_"+CopyNPC;
 
         public override void SetStaticDefaults()
         {
