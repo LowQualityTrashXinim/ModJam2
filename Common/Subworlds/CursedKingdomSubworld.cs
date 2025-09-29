@@ -1,14 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using ModJam2.Common.Subworlds;
-using ModJam2.Common.Utils;
 using ModJam2.Common.Wrapper;
 using ModJam2.Content;
 using ModJam2.Content.NPCs;
 using ModJam2.Content.Scrolls;
 using ModJam2.Content.ThrowingKnifes;
-using ModJam2.Texture;
-using ReLogic.Content;
 using SubworldLibrary;
 using System.Collections.Generic;
 using Terraria;
@@ -16,9 +12,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.IO;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
 
@@ -37,7 +31,7 @@ namespace ModJam2.Common.Subworlds
         };
         public override void OnEnter()
         {
-            Main.NewText("Cursed Kingdom Domain: Disable natural life regeneration");
+            Main.NewText("Cursed Kingdom Domain: Disable natural life regeneration", Color.DarkRed);
         }
     }
 }
@@ -60,6 +54,8 @@ public class GenPass_CursedKingdom : GenPass
     {
         int length = 800 * 420;
         short counterH = 0;
+        Main.worldSurface = 0;
+        Main.rockLayer = 0;
         for (int i = 0; i < length; i++)
         {
             int x = i % 800;
@@ -78,7 +74,7 @@ public class GenPass_CursedKingdom : GenPass
             {
                 spawnX = Main.rand.Next(2, 800);
                 spawnY = Main.rand.Next(2, 420);
-            } while (!system.Check_PlayerPositionValid(spawnX, spawnY));
+            } while (!system.Check_PositionValid(spawnX, spawnY));
             Main.spawnTileX = spawnX;
             Main.spawnTileY = spawnY;
         }
@@ -93,52 +89,78 @@ public class CursedKingdom_GlobalNPC : GlobalNPC
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<TestEnterSubWorld>()));
         }
     }
-    public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
-    {
-        if (SubworldSystem.IsActive<CursedKingdomSubworld>())
-        {
-            spawnInfo.PlayerSafe = false;
-            pool.Clear();
-            pool.Add(ModContent.NPCType<Knight>(), 1);
-            pool.Add(ModContent.NPCType<Archer>(), 1);
-            pool.Add(ModContent.NPCType<Mage>(), 1);
-        }
-    }
-    public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
-    {
-        if (SubworldSystem.IsActive<CursedKingdomSubworld>())
-        {
-            spawnRate /= 2;
-            maxSpawns = 10;
-        }
-    }
 }
 public class CursedKingdom_GenSystem : ModSystem
 {
-    public bool Check_PlayerPositionValid(int X, int Y)
+    const int MaxNPCcanBeOnScreen = 10;
+    const int SpawnCD = 600;
+    const int FailSafe = 9999;
+    int CD = 0;
+    public override void PreUpdateNPCs()
+    {
+        if (!SubworldSystem.IsActive<CursedKingdomSubworld>())
+        {
+            return;
+        }
+        int counter = 0;
+        for (int i = 0; i < Main.npc.Length; i++)
+        {
+            NPC npc = Main.npc[i];
+            if (npc.active)
+            {
+                counter++;
+            }
+            if (counter >= MaxNPCcanBeOnScreen)
+            {
+                break;
+            }
+        }
+        if (counter < MaxNPCcanBeOnScreen)
+        {
+            if (++CD >= SpawnCD)
+            {
+                Point spawnPos = Main.LocalPlayer.position.ToPoint() + new Point(Main.rand.Next(-1000, 1000), Main.rand.Next(-500, 500));
+                int failsafeCheck = 0;
+                do
+                {
+                    failsafeCheck++;
+                    spawnPos = Main.LocalPlayer.position.ToTileCoordinates() + new Point(Main.rand.Next(-1000, 1000), Main.rand.Next(-500, 500));
+                } while (!Check_PositionValid(spawnPos.X, spawnPos.Y) && failsafeCheck < FailSafe);
+                if(failsafeCheck >= FailSafe)
+                {
+                    return;
+                }
+                CD = Main.rand.Next(-300, 0);
+                spawnPos = spawnPos.ToWorldCoordinates().ToPoint();
+                NPC.NewNPC(Entity.GetSource_NaturalSpawn(), spawnPos.X, spawnPos.Y - 1,
+                    Main.rand.Next([
+                     ModContent.NPCType<Knight>(),
+                    ModContent.NPCType<Archer>(),
+                    ModContent.NPCType<Mage>(),
+                ]));
+            }
+        }
+    }
+    public bool Check_PositionValid(int X, int Y)
     {
         if (!WorldGen.InWorld(X, Y))
         {
             return false;
         }
-        if (WorldGen.TileEmpty(X, Y))
+        int pass = 0;
+        for (int offsetX = -1; offsetX <= 1; offsetX++)
         {
-            int pass = 0;
-            for (int offsetX = -1; offsetX <= 1; offsetX++)
+            for (int offsetY = -1; offsetY <= 1; offsetY++)
             {
-                for (int offsetY = -1; offsetY <= 1; offsetY++)
+                if (WorldGen.TileEmpty(X + offsetX, Y + offsetY))
                 {
-                    if (offsetX == 0 && offsetY == 0) continue;
-                    if (WorldGen.TileEmpty(X + offsetX, Y + offsetY))
-                    {
-                        pass++;
-                    }
+                    pass++;
                 }
             }
-            if (pass >= 8)
-            {
-                return true;
-            }
+        }
+        if (pass >= 8)
+        {
+            return true;
         }
         return false;
     }

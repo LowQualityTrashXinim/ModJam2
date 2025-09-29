@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ModJam2.Common.Utils;
 using ModJam2.Texture;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -102,6 +103,10 @@ public abstract class HeldProjectile : BaseHostileProjectile
     public int ShootProjectile = 0;
     public float shootVel = 1;
     public float ExtraRotationValue = 0;
+    public virtual void Shoot(IEntitySource source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+    {
+        ModUtils.NewHostileProjectile(source, position, velocity, type, damage, knockback, AdjustHostileProjectileDamage: false);
+    }
     public override void AI()
     {
         if (Projectile.timeLeft == InitialTimeLeft)
@@ -110,7 +115,7 @@ public abstract class HeldProjectile : BaseHostileProjectile
             Projectile.rotation = Projectile.velocity.ToRotation() + ExtraRotationValue;
             if (ShootProjectile != ProjectileID.None)
             {
-                ModUtils.NewHostileProjectile(Projectile.GetSource_FromAI(), Projectile.Center + Projectile.velocity * Projectile.Size.Length() * .7f, Projectile.velocity.SafeNormalize(Vector2.Zero) * shootVel, ShootProjectile, Projectile.damage, Projectile.knockBack, AdjustHostileProjectileDamage: false);
+                Shoot(Projectile.GetSource_FromAI(), Projectile.Center + Projectile.velocity * Projectile.Size.Length() * .7f, Projectile.velocity.SafeNormalize(Vector2.Zero) * shootVel, ShootProjectile, Projectile.damage, Projectile.knockBack);
             }
         }
         if (IsNPCActive(out NPC npc))

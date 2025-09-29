@@ -15,7 +15,7 @@ namespace ModJam2.Content.ThrowingKnifes
         {
             base.Knife_SetDefaults(out damage, out usespeed, out shoot, out speed);
             damage = 150;
-            shoot = ModContent.ProjectileType<IchorThrowingKnife_Projectile>();
+            shoot = ModContent.ProjectileType<CursedFlameThrowingKnife_Projectile>();
             speed = 3;
         }
     }

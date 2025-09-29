@@ -95,6 +95,12 @@ Projectiles: {
 	Held_RubyStaff.DisplayName: Held_ Ruby Staff
 	Held_SapphireStaff.DisplayName: Held_ Sapphire Staff
 	Held_TopazStaff.DisplayName: Held_ Topaz Staff
+	Held_CursedBook.DisplayName: Held_ Cursed Book
+	Held_CursedFlames.DisplayName: Held_ Cursed Flames
+	Held_DemonScythe.DisplayName: Held_ Demon Scythe
+	Held_FlowerOfFire.DisplayName: Held_ Flower Of Fire
+	Held_FlowerOfFrost.DisplayName: Held_ Flower Of Frost
+	Held_WaterBolt.DisplayName: Held_ Water Bolt
 }
 
 NPCs: {
