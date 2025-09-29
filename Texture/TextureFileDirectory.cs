@@ -9,6 +9,7 @@
         public const string EMPTYDEBUFF = CommonTextureStringPattern + "EmptyDeBuff";
         public const string ACCESSORIESSLOT = "Terraria/Images/Inventory_Back7";
         public const string Wave = CommonTextureStringPattern + "Wave";
+        public const string Scroll = CommonTextureStringPattern + "Scroll";
         public const string MissingTexture_Default = CommonTextureStringPattern + MissingTexture_Folder + "MissingTextureDefault";
         public static string GetTheSameTextureAsEntity<T>() where T : class
         {

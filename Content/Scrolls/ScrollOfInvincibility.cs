@@ -6,7 +6,7 @@ using ModJam2.Common.Utils;
 namespace Roguelike.Contents.Items.Consumable.Scroll;
 internal class ScrollOfInvincibility : ModItem
 {
-    public override string Texture => ModTexture.MissingTexture_Default;
+    public override string Texture => ModTexture.Scroll;
     public override void SetDefaults()
     {
         Item.Item_DefaultToScroll(32, 32, ModContent.BuffType<InvincibilitySpell>(), ModUtils.ToSecond(10));

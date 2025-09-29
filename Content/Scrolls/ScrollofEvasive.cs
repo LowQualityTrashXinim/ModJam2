@@ -6,7 +6,7 @@ namespace Roguelike.Contents.Items.Consumable.Scroll;
 internal class ScrollofEvasive : ModItem
 {
 
-    public override string Texture => ModTexture.MissingTexture_Default;
+    public override string Texture => ModTexture.Scroll;
     public override void SetDefaults()
     {
         Item.Item_DefaultToScroll(32, 32, ModContent.BuffType<EvasionSpell>(), ModUtils.ToSecond(20));

@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 namespace Roguelike.Contents.Items.Consumable.Scroll;
 internal class ScrollOfTeleportation : ModItem
 {
-    public override string Texture => ModTexture.MissingTexture_Default;
+    public override string Texture => ModTexture.Scroll;
     public override void SetDefaults()
     {
         Item.width = 32;

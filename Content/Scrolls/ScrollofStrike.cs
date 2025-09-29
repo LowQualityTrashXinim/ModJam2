@@ -7,7 +7,7 @@ namespace Roguelike.Contents.Items.Consumable.Scroll
 {
     class ScrollofStrike : ModItem
     {
-        public override string Texture => ModTexture.MissingTexture_Default;
+        public override string Texture => ModTexture.Scroll;
         public override void SetDefaults()
         {
             Item.Item_DefaultToScroll(32, 32, ModContent.BuffType<StrikeSpell>(), ModUtils.ToMinute(1));

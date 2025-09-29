@@ -27,7 +27,7 @@ Buffs: {
 
 Items: {
 	ScrollofEvasive: {
-		DisplayName: Scrollof Evasive
+		DisplayName: Scroll of Evasive
 		Tooltip: ""
 	}
 
@@ -52,7 +52,7 @@ Items: {
 	}
 
 	ScrollofStrike: {
-		DisplayName: Scrollof Strike
+		DisplayName: Scroll of Strike
 		Tooltip: ""
 	}
 
@@ -77,7 +77,7 @@ Items: {
 	}
 
 	TestEnterSubWorld: {
-		DisplayName: Test Enter Sub World
+		DisplayName: Scroll of the Cursed Kingdom
 		Tooltip: ""
 	}
 }
@@ -96,3 +96,5 @@ NPCs: {
 	Archer.DisplayName: Archer
 	Mage.DisplayName: Mage
 }
+
+Tiles.Portal.MapEntry: Portal

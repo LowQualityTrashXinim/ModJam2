@@ -1,14 +1,24 @@
-﻿using ModJam2.Common.Subworlds;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ModJam2.Common.Subworlds;
+using ModJam2.Common.Utils;
 using ModJam2.Common.Wrapper;
+using ModJam2.Content;
+using ModJam2.Content.NPCs;
 using ModJam2.Content.ThrowingKnifes;
+using ModJam2.Texture;
+using ReLogic.Content;
 using Roguelike.Contents.Items.Consumable.Scroll;
 using SubworldLibrary;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.IO;
+using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
 
@@ -71,6 +81,35 @@ public class GenPass_CursedKingdom : GenPass
             } while (!system.Check_PlayerPositionValid(spawnX, spawnY));
             Main.spawnTileX = spawnX;
             Main.spawnTileY = spawnY;
+        }
+    }
+}
+public class CursedKingdom_GlobalNPC : GlobalNPC
+{
+    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+    {
+        if (npc.type == NPCID.WallofFlesh)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<TestEnterSubWorld>()));
+        }
+    }
+    public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
+    {
+        if (SubworldSystem.IsActive<CursedKingdomSubworld>())
+        {
+            spawnInfo.PlayerSafe = false;
+            pool.Clear();
+            pool.Add(ModContent.NPCType<Knight>(), 1);
+            pool.Add(ModContent.NPCType<Archer>(), 1);
+            pool.Add(ModContent.NPCType<Mage>(), 1);
+        }
+    }
+    public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
+    {
+        if (SubworldSystem.IsActive<CursedKingdomSubworld>())
+        {
+            spawnRate /= 2;
+            maxSpawns = 10;
         }
     }
 }
@@ -171,7 +210,7 @@ public class CursedKingdom_GenSystem : ModSystem
         {
             return Main.rand.Next([ModContent.ItemType<IchorThrowingKnife>(), ModContent.ItemType<CursedFlameThrowingKnife>()]);
         }
-        else if(luck >= .7f)
+        else if (luck >= .7f)
         {
             return Main.rand.Next(new int[]
             {
