@@ -16,7 +16,6 @@ namespace ModJam2.Content.NPCs
         int playerUnreachableDuration = 0;
         const int GRAPPLE_COOLDOWN = 120;
         NpcGrappleHook hook = null;
-        NpcSwordSwing sword = null;
         public override string Texture => "Terraria/Images/NPC_"+NPCID.ArmoredViking;
 
         public override void SetStaticDefaults()

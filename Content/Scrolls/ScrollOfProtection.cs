@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 using ModJam2.Texture;
 using ModJam2.Common.Utils;
 
-namespace Roguelike.Contents.Items.Consumable.Scroll;
+namespace ModJam2.Content.Scrolls;
 internal class ScrollOfProtection : ModItem
 {
     public override string Texture => ModTexture.Scroll;

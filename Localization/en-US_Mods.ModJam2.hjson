@@ -89,6 +89,12 @@ Projectiles: {
 	CursedFlameThrowingKnife_Projectile.DisplayName: Cursed Flame Throwing Knife_ Projectile
 	IchorThrowingKnife_Projectile.DisplayName: Ichor Throwing Knife_ Projectile
 	NpcStaff.DisplayName: Npc Staff
+	Held_AmethystStaff.DisplayName: Held_ Amethyst Staff
+	Held_DiamondStaff.DisplayName: Held_ Diamond Staff
+	Held_EmeraldStaff.DisplayName: Held_ Emerald Staff
+	Held_RubyStaff.DisplayName: Held_ Ruby Staff
+	Held_SapphireStaff.DisplayName: Held_ Sapphire Staff
+	Held_TopazStaff.DisplayName: Held_ Topaz Staff
 }
 
 NPCs: {

@@ -1,13 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using ModJam2.Common.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace ModJam2.Content.NPCs

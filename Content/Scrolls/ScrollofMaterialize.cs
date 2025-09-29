@@ -4,7 +4,7 @@ using ModJam2.Texture;
 using Terraria.ModLoader;
 using ModJam2.Common.Utils;
 
-namespace Roguelike.Contents.Items.Consumable.Scroll;
+namespace ModJam2.Content.Scrolls;
 internal class ScrollOfMaterialize : ModItem
 {
     public override string Texture => ModTexture.Scroll;
