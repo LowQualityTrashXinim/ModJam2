@@ -80,6 +80,19 @@ public class GenPass_CursedKingdom : GenPass
         }
     }
 }
+public class GenPass_CursedKingdomEntrance : GenPass
+{
+    public GenPass_CursedKingdomEntrance(string name, double loadWeight) : base(name, loadWeight)
+    {
+    }
+
+    protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
+    {
+        int X = Main.spawnTileX + Main.rand.Next(-500, 500);
+        int Y = Main.rand.Next((int)(Main.maxTilesY * .77f), (int)(Main.maxTilesY * .88f));
+        ModContent.GetInstance<CursedKingdom_GenSystem>().Place_CursedKingdomEntrance(X, Y);
+    }
+}
 public class CursedKingdom_GlobalNPC : GlobalNPC
 {
     public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
@@ -92,6 +105,10 @@ public class CursedKingdom_GlobalNPC : GlobalNPC
 }
 public class CursedKingdom_GenSystem : ModSystem
 {
+    public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
+    {
+        tasks.Insert(tasks.IndexOf(tasks.Find(t => t.Name == "Guide")) + 1, new GenPass_CursedKingdomEntrance("", .1f));
+    }
     const int MaxNPCcanBeOnScreen = 10;
     const int SpawnCD = 600;
     const int FailSafe = 9999;
@@ -163,6 +180,17 @@ public class CursedKingdom_GenSystem : ModSystem
             return true;
         }
         return false;
+    }
+    public void Place_CursedKingdomEntrance(int X, int Y)
+    {
+        var data = ModWrapper.Get_StructureData("Assets/Structures/CK_Entrance", Mod);
+        int Width = data.width / 2;
+        int Height = data.height / 2;
+        Point16 point = new(X - Width, Y - Height);
+        if (ModWrapper.IsInBound(data, point))
+        {
+            ModWrapper.GenerateFromData(data, point);
+        }
     }
     public bool Place_CursedKingdom()
     {
