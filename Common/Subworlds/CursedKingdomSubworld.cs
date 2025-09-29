@@ -126,7 +126,7 @@ public class CursedKingdom_GenSystem : ModSystem
                     failsafeCheck++;
                     spawnPos = Main.LocalPlayer.position.ToTileCoordinates() + new Point(Main.rand.Next(-1000, 1000), Main.rand.Next(-500, 500));
                 } while (!Check_PositionValid(spawnPos.X, spawnPos.Y) && failsafeCheck < FailSafe);
-                if(failsafeCheck >= FailSafe)
+                if (failsafeCheck >= FailSafe)
                 {
                     return;
                 }
@@ -270,5 +270,19 @@ public class CursedKingdomPlayer : ModPlayer
             Player.lifeRegenTime = 0;
         }
     }
-
+    public override void UpdateEquips()
+    {
+        if (SubworldSystem.IsActive<CursedKingdomSubworld>())
+        {
+            Player.AddBuff(BuffID.NoBuilding, 2);
+        }
+    }
+    public override bool CanUseItem(Item item)
+    {
+        if (SubworldSystem.IsActive<CursedKingdomSubworld>())
+        {
+            return !ProjectileID.Sets.Explosive[item.shoot];
+        }
+        return base.CanUseItem(item);
+    }
 }
