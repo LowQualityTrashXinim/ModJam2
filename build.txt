@@ -1,4 +1,5 @@
 displayName = Forgotten Kingdom
-author = Xinim and MrRakan
-version = 0.1
+author = Xinim, MrRakan and ndeo_
+version = 1.0
 modReferences  = StructureHelper@3.0, SubworldLibrary
+includeSource = true
