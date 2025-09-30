@@ -11,7 +11,7 @@ namespace ModJam2.Content.NPCs
     {
         const int CopyNPC = NPCID.Tim;
         int playerUnreachableDuration = 0;
-        const int GRAPPLE_COOLDOWN = 120;
+        const int TP_COOLDOWN = 120;
         int RandomizeHeldItem = 0;
         public override string Texture => "Terraria/Images/NPC_" + NPCID.Tim;
 
@@ -38,17 +38,29 @@ namespace ModJam2.Content.NPCs
         public override void AI()
         {
             NPC.TargetClosest();
+
+            Vector2 tpPos = NPC.targetRect.Center() + Vector2.UnitX * 128 * NPC.direction;
+            NPC.velocity.X = 0;
+
             if (NPC.targetRect.Center().Y < NPC.Center.Y - 64)
-                playerUnreachableDuration = (int)MathHelper.Clamp(playerUnreachableDuration + 1, 0, GRAPPLE_COOLDOWN);
+                playerUnreachableDuration = (int)MathHelper.Clamp(playerUnreachableDuration + 1, 0, TP_COOLDOWN);
             else
-                playerUnreachableDuration = (int)MathHelper.Clamp(playerUnreachableDuration - 1, 0, GRAPPLE_COOLDOWN);
-            if (playerUnreachableDuration >= GRAPPLE_COOLDOWN)
+                playerUnreachableDuration = (int)MathHelper.Clamp(playerUnreachableDuration - 1, 0, TP_COOLDOWN);
+
+            if(playerUnreachableDuration >= TP_COOLDOWN / 2)
+                for(int i = 0; i < 15; i++)
+                    Dust.NewDustDirect(tpPos,32,64,DustID.RuneWizard,0,0,0,Color.Gray,1).noGravity = true;
+
+            if (playerUnreachableDuration >= TP_COOLDOWN)
             {
-                NPC.Center = NPC.targetRect.Center() + Vector2.UnitX * 128 * NPC.direction;
+                NPC.Center = tpPos;
                 playerUnreachableDuration = 0;
                 NPC.TargetClosest();
+                for(int i = 0; i < 64; i++)
+                    Dust.NewDustPerfect(NPC.Center,DustID.RuneWizard,Main.rand.NextVector2CircularEdge(16,16)).noGravity = true;
+
             }
-            NPC.localAI[2] = (int)MathHelper.Clamp(NPC.localAI[2] - 1, 0, GRAPPLE_COOLDOWN);
+            NPC.localAI[2] = (int)MathHelper.Clamp(NPC.localAI[2] - 1, 0, TP_COOLDOWN);
 
             if (NPC.localAI[2] == 0 && NPC.Distance(NPC.targetRect.Center()) <= 725)
             {

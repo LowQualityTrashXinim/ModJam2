@@ -101,6 +101,7 @@ Projectiles: {
 	Held_FlowerOfFire.DisplayName: Held_ Flower Of Fire
 	Held_FlowerOfFrost.DisplayName: Held_ Flower Of Frost
 	Held_WaterBolt.DisplayName: Held_ Water Bolt
+	Portal.DisplayName: Portal
 }
 
 NPCs: {
