@@ -30,10 +30,33 @@ namespace ModJam2.Content.NPCs
             NPC.CloneDefaults(CopyNPC);
             AnimationType = CopyNPC;
             NPC.aiStyle = -1;
+            NPC.alpha = 255;
         }
         public override void OnSpawn(IEntitySource source)
         {
             RandomizeHeldItem = Main.rand.Next(ModJam2System.Mage_HeldProjectile);
+        }
+        int SpawningAnimationTime = 300;
+        public override bool PreAI()
+        {
+            if (--SpawningAnimationTime >= 0)
+            {
+                if (SpawningAnimationTime <= 255)
+                {
+                    NPC.alpha--;
+                }
+                for (int i = 0; i < 5; i++)
+                {
+                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, 0, 0, DustID.Cloud);
+                    dust.noGravity = true;
+                    dust.velocity = Main.rand.NextVector2CircularEdge(1, 1) * Main.rand.NextFloat(1, 3);
+                    dust.rotation = MathHelper.ToRadians(Main.rand.NextFloat(90));
+                    dust.scale += Main.rand.NextFloat(.5f);
+                    NPC.velocity = Vector2.Zero;
+                }
+                return false;
+            }
+            return base.PreAI();
         }
         public override void AI()
         {
@@ -47,17 +70,17 @@ namespace ModJam2.Content.NPCs
             else
                 playerUnreachableDuration = (int)MathHelper.Clamp(playerUnreachableDuration - 1, 0, TP_COOLDOWN);
 
-            if(playerUnreachableDuration >= TP_COOLDOWN / 2)
-                for(int i = 0; i < 15; i++)
-                    Dust.NewDustDirect(tpPos,32,64,DustID.RuneWizard,0,0,0,Color.Gray,1).noGravity = true;
+            if (playerUnreachableDuration >= TP_COOLDOWN / 2)
+                for (int i = 0; i < 15; i++)
+                    Dust.NewDustDirect(tpPos, 32, 64, DustID.RuneWizard, 0, 0, 0, Color.Gray, 1).noGravity = true;
 
             if (playerUnreachableDuration >= TP_COOLDOWN)
             {
                 NPC.Center = tpPos;
                 playerUnreachableDuration = 0;
                 NPC.TargetClosest();
-                for(int i = 0; i < 64; i++)
-                    Dust.NewDustPerfect(NPC.Center,DustID.RuneWizard,Main.rand.NextVector2CircularEdge(16,16)).noGravity = true;
+                for (int i = 0; i < 64; i++)
+                    Dust.NewDustPerfect(NPC.Center, DustID.RuneWizard, Main.rand.NextVector2CircularEdge(16, 16)).noGravity = true;
 
             }
             NPC.localAI[2] = (int)MathHelper.Clamp(NPC.localAI[2] - 1, 0, TP_COOLDOWN);

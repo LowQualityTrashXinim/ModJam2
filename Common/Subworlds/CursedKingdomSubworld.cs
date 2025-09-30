@@ -3,6 +3,7 @@ using ModJam2.Common.Subworlds;
 using ModJam2.Common.Wrapper;
 using ModJam2.Content;
 using ModJam2.Content.NPCs;
+using ModJam2.Content.Projectiles;
 using ModJam2.Content.Scrolls;
 using ModJam2.Content.ThrowingKnifes;
 using SubworldLibrary;
@@ -13,6 +14,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
 
@@ -105,14 +107,33 @@ public class CursedKingdom_GlobalNPC : GlobalNPC
 }
 public class CursedKingdom_GenSystem : ModSystem
 {
+    int Projectile_WhoAmI = -1;
     public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
     {
         tasks.Insert(tasks.IndexOf(tasks.Find(t => t.Name == "Guide")) + 1, new GenPass_CursedKingdomEntrance("", .1f));
     }
-    const int MaxNPCcanBeOnScreen = 10;
+    Rectangle CursedKingdomArea = new Rectangle();
+    const int MaxNPCcanBeOnScreen = 50;
     const int SpawnCD = 600;
     const int FailSafe = 9999;
     int CD = 0;
+    public override void PreUpdateProjectiles()
+    {
+        Player player = Main.LocalPlayer;
+        Vector2 CK_pos = CursedKingdomArea.Center().ToWorldCoordinates();
+        if (player.Center.Distance(CK_pos) < 2000)
+        {
+            if (Projectile_WhoAmI < 0 || Projectile_WhoAmI > Main.maxProjectiles)
+            {
+                Projectile_WhoAmI = Projectile.NewProjectile(null, CK_pos, Vector2.Zero, ModContent.ProjectileType<Portal>(), 0, 0, player.whoAmI);
+            }
+            Projectile proj = Main.projectile[Projectile_WhoAmI];
+            if (!proj.active || proj.type != ModContent.ProjectileType<Portal>())
+            {
+                Projectile_WhoAmI = -1;
+            }
+        }
+    }
     public override void PreUpdateNPCs()
     {
         if (!SubworldSystem.IsActive<CursedKingdomSubworld>())
@@ -147,7 +168,7 @@ public class CursedKingdom_GenSystem : ModSystem
                 {
                     return;
                 }
-                CD = Main.rand.Next(-300, 0);
+                CD = Main.rand.Next(420, 540);
                 spawnPos = spawnPos.ToWorldCoordinates().ToPoint();
                 NPC.NewNPC(Entity.GetSource_NaturalSpawn(), spawnPos.X, spawnPos.Y - 1,
                     Main.rand.Next([
@@ -169,10 +190,11 @@ public class CursedKingdom_GenSystem : ModSystem
         {
             for (int offsetY = -1; offsetY <= 1; offsetY++)
             {
-                if (WorldGen.TileEmpty(X + offsetX, Y + offsetY))
-                {
-                    pass++;
-                }
+                if (WorldGen.InWorld(X + offsetX, Y + offsetY))
+                    if (WorldGen.TileEmpty(X + offsetX, Y + offsetY))
+                    {
+                        pass++;
+                    }
             }
         }
         if (pass >= 8)
@@ -183,12 +205,14 @@ public class CursedKingdom_GenSystem : ModSystem
     }
     public void Place_CursedKingdomEntrance(int X, int Y)
     {
+
         var data = ModWrapper.Get_StructureData("Assets/Structures/CK_Entrance", Mod);
         int Width = data.width / 2;
         int Height = data.height / 2;
         Point16 point = new(X - Width, Y - Height);
         if (ModWrapper.IsInBound(data, point))
         {
+            CursedKingdomArea = new(point.X, point.Y, data.width, data.height);
             ModWrapper.GenerateFromData(data, point);
         }
     }
@@ -284,6 +308,14 @@ public class CursedKingdom_GenSystem : ModSystem
             return Main.rand.Next(new int[] { ItemID.ThrowingKnife, ItemID.PoisonedKnife, ItemID.Shuriken, ItemID.HealingPotion });
         }
         return ItemID.ThrowingKnife;
+    }
+    public override void SaveWorldData(TagCompound tag)
+    {
+        tag["CursedKingdomArea"] = CursedKingdomArea;
+    }
+    public override void LoadWorldData(TagCompound tag)
+    {
+        CursedKingdomArea = tag.Get<Rectangle>("CursedKingdomArea");
     }
 }
 public class CursedKingdomModSystem : ModSystem
